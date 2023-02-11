@@ -1,4 +1,4 @@
-package com.example.refrigerator.model;
+package com.example.refrigerator.domain;
 
 import com.example.refrigerator.util.Category;
 import lombok.AllArgsConstructor;
@@ -37,7 +37,7 @@ public class Item {
     @JoinColumn(name = "userId")
     private User user;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     @Column(nullable = false)

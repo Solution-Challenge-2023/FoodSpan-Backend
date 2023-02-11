@@ -1,11 +1,10 @@
-package com.example.refrigerator.model;
+package com.example.refrigerator.domain;
 
 import com.example.refrigerator.util.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -31,7 +30,8 @@ public class User {
     @Column(nullable = false, length = 50)
     private String email;
 
-    @ColumnDefault("'user'")
+    // @ColumnDefault("'user'")
+    @Enumerated(EnumType.STRING)
     private UserType role;
 
     @CreationTimestamp // 시간 자동 입력
