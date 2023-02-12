@@ -1,4 +1,4 @@
-package com.example.refrigerator.model;
+package com.example.refrigerator.domain;
 
 import com.example.refrigerator.util.Category;
 import lombok.AllArgsConstructor;
