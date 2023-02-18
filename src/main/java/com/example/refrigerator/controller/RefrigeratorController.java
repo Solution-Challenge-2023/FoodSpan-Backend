@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/refrigerator")
+@RequestMapping("/api/v1/refrigerators")
 public class RefrigeratorController {
     private final RefrigeratorService refrigeratorService;
 
