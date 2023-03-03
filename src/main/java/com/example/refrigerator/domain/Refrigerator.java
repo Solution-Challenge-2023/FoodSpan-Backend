@@ -25,7 +25,8 @@ public class Refrigerator {
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false, length = 255)
+
+    @Column(length = 255)
     private String memo;
 
     @ManyToOne(fetch = FetchType.EAGER) // 들고올때 정보 다 필요하니까
@@ -42,5 +43,12 @@ public class Refrigerator {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
+    // TODO: Soft delete로 변경
     private Timestamp deletedAt;
+
+    public void update(String name, String memo) {
+        this.name = name;
+        this.memo = memo;
+    }
+
 }

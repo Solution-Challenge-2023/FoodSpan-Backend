@@ -37,6 +37,8 @@ public class Item {
     @JoinColumn(name = "userId")
     private User user;
 
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Category category;
 
