@@ -25,6 +25,7 @@ public class Refrigerator {
     @Column(nullable = false, length = 100)
     private String name;
 
+
     @Column(length = 255)
     private String memo;
 
@@ -49,4 +50,5 @@ public class Refrigerator {
         this.name = name;
         this.memo = memo;
     }
+
 }
