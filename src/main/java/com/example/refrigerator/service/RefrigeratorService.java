@@ -23,7 +23,7 @@ public class RefrigeratorService {
         return refrigeratorRepository.save(requestDto.toEntity());
     }
 
-    public Refrigerator findById(int id) {
+    public Refrigerator findById(Long id) {
         Refrigerator refrigerator = refrigeratorRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 냉장고가 없습니다. id=" + id));
 
@@ -35,7 +35,7 @@ public class RefrigeratorService {
     }
 
     @Transactional
-    public Refrigerator update(int id, RefrigeratorRequestDto requestDto) {
+    public Refrigerator update(Long id, RefrigeratorRequestDto requestDto) {
         Refrigerator refrigerator = refrigeratorRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 냉장고가 없습니다. id="+id));
 
         //JPA 의 영속성 컨텍스트 덕분에 entity 객체의 값만 변경하면 자동으로 변경사항 반영함!
@@ -45,7 +45,7 @@ public class RefrigeratorService {
     }
 
     @Transactional
-    public void delete(int id) {
+    public void delete(Long id) {
         Refrigerator refrigerator = refrigeratorRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 냉장고가 없습니다. id="+id));
         refrigeratorRepository.delete(refrigerator);
     }
