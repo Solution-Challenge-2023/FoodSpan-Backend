@@ -52,10 +52,10 @@ public class ItemService {
 
     // 단건 수정
     @Transactional
-    public Item update(Long id, Long itemId, ItemRequestDto item) {
+    public ItemResponseDto update(Long id, Long itemId, ItemRequestDto item) {
         Item exitem = itemRepository.findById(itemId).orElseThrow(()-> new IllegalArgumentException("해당 상품이 없습니다. itemId="+itemId));
         exitem.update(item);
-        return exitem;
+        return new ItemResponseDto(exitem);
     }
     // 다건 수정
     @Transactional
