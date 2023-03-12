@@ -19,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/refrigerators")
+@ResponseStatus
 public class RefrigeratorController {
     private final RefrigeratorService refrigeratorService;
 
@@ -56,16 +57,4 @@ public class RefrigeratorController {
         Long deleted = refrigeratorService.delete(id);
         return ResponseDto.ok(deleted);
     }
-
-
-
-
-    // 상품 추가는 s
-    // 단건 상품 직접 추가
-    // 냉장고
-
-    // 상품 스캔한 단건 상품 추가
-
-    // 영수증에서 뽑힌 리스트 다건 추가
-
 }
