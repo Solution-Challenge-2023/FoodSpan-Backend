@@ -7,7 +7,9 @@ import com.example.refrigerator.dto.ItemResponseDto;
 import com.example.refrigerator.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -46,14 +48,14 @@ public class ItemService {
     @Transactional
     public ItemResponseDto findOne(Long id, Long itemId) {
         Item item = itemRepository.findById(itemId)
-                .orElseThrow(() -> new IllegalArgumentException("냉장고에 해당 상품이 없습니다. id=" + itemId));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND ,"냉장고에 해당 상품이 없습니다. id=" + itemId));
         return new ItemResponseDto(item);
     }
 
     // 단건 수정
     @Transactional
     public ItemResponseDto update(Long id, Long itemId, ItemRequestDto item) {
-        Item exitem = itemRepository.findById(itemId).orElseThrow(()-> new IllegalArgumentException("해당 상품이 없습니다. itemId="+itemId));
+        Item exitem = itemRepository.findById(itemId).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND ,"해당 상품이 없습니다. itemId="+itemId));
         exitem.update(item);
         return new ItemResponseDto(exitem);
     }
@@ -61,7 +63,7 @@ public class ItemService {
     @Transactional
     public void updateAll(List<Item> items) {
         for(Item item : items) {
-            Item exItem = itemRepository.findById(item.getId()).orElseThrow(()-> new IllegalArgumentException("해당 상품이 없습니다. itemId="));
+            Item exItem = itemRepository.findById(item.getId()).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND ,"해당 상품이 없습니다. itemId="));
             exItem.updateCount(item);
         }
     }
