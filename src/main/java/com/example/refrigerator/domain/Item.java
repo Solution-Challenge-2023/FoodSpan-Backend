@@ -50,8 +50,11 @@ public class Item {
     @JoinColumn(name = "userId")
     private User user;
 
+
     @Column(nullable = false)
+
     private Long category;
+
 
     @Column
     private LocalDateTime expiredAt;
