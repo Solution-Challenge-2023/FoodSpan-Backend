@@ -1,49 +1,71 @@
 package com.example.refrigerator.controller;
 
 
+import com.example.refrigerator.domain.Item;
 import com.example.refrigerator.domain.Refrigerator;
+import com.example.refrigerator.dto.ItemRequestDto;
+import com.example.refrigerator.dto.ItemResponseDto;
 import com.example.refrigerator.dto.RefrigeratorRequestDto;
+import com.example.refrigerator.service.ItemService;
 import com.example.refrigerator.service.RefrigeratorService;
-import lombok.Data;
+import com.example.refrigerator.util.ResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/refrigerator")
+@RequestMapping("/api/v1/refrigerators")
 public class RefrigeratorController {
     private final RefrigeratorService refrigeratorService;
 
     // 냉장고 이름, 메모 정보 받아 냉장고 등록
     @PostMapping()
-    public int save(@RequestBody RefrigeratorRequestDto requestDto) {
-        return refrigeratorService.save(requestDto).getId();
+    public ResponseEntity<Refrigerator> save(@RequestBody RefrigeratorRequestDto requestDto) {
+        Refrigerator refrigerator = refrigeratorService.save(requestDto);
+        return ResponseDto.created(refrigerator);
     }
 
     // 냉장고 id로 조회
     @GetMapping("/{id}")
-    public Refrigerator findById(@PathVariable int id) {
-        return refrigeratorService.findById(id);
+    public ResponseEntity<Refrigerator> findById(@PathVariable Long id) {
+        Refrigerator refrigerator = refrigeratorService.findById(id);
+        return ResponseDto.ok(refrigerator);
     }
 
     // 냉장고 모두 조회
     @GetMapping()
-    public List<Refrigerator> findAll() {
-        return refrigeratorService.findAll();
+    public ResponseEntity<List<Refrigerator>> findAll() {
+        List<Refrigerator> refrigerators = refrigeratorService.findAll();
+        return ResponseDto.ok(refrigerators);
     }
 
     // 냉장고 이름, 메모 수정
     @PutMapping("/{id}")
-    public Refrigerator update(@PathVariable int id, @RequestBody RefrigeratorRequestDto requestDto) {
-        return refrigeratorService.update(id, requestDto);
+    public ResponseEntity<Refrigerator> update(@PathVariable Long id, @RequestBody RefrigeratorRequestDto requestDto) {
+        Refrigerator refrigerator = refrigeratorService.update(id, requestDto);
+        return ResponseDto.ok(refrigerator);
     }
 
     // 냉장고 삭제
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        refrigeratorService.delete(id);
+    public ResponseEntity<Long> delete(@PathVariable Long id) {
+        Long deleted = refrigeratorService.delete(id);
+        return ResponseDto.ok(deleted);
     }
+
+
+
+
+    // 상품 추가는 s
+    // 단건 상품 직접 추가
+    // 냉장고
+
+    // 상품 스캔한 단건 상품 추가
+
+    // 영수증에서 뽑힌 리스트 다건 추가
+
 }

@@ -6,9 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -20,7 +23,7 @@ public class Refrigerator {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(nullable = false, length = 100)
     private String name;
@@ -29,19 +32,20 @@ public class Refrigerator {
     @Column(length = 255)
     private String memo;
 
-    @ManyToOne(fetch = FetchType.EAGER) // 들고올때 정보 다 필요하니까
+    @ManyToOne(fetch = FetchType.LAZY) // 들고올때 정보 다 필요하니까
     @JoinColumn(name = "userId")
     private User user;
 
     // 단순 조인해서 값을 가져오기 위함, 칼럼 필요없음
-    @OneToMany(mappedBy = "refrigerator", fetch = FetchType.EAGER) // mappedBy 연관관계의 주인이 아니다 -> DB에 칼럼을 만들지 마세요
+    @OneToMany(mappedBy = "refrigerator")
+//    @OneToMany(mappedBy = "refrigerator", fetch = FetchType.EAGER) // mappedBy 연관관계의 주인이 아니다 -> DB에 칼럼을 만들지 마세요
     private List<Item> item;
 
-    @CreationTimestamp
-    private Timestamp createdAt;
+    @CreatedDate
+    private LocalDateTime createdAt;
 
-    @UpdateTimestamp
-    private Timestamp updatedAt;
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 
     // TODO: Soft delete로 변경
     private Timestamp deletedAt;
