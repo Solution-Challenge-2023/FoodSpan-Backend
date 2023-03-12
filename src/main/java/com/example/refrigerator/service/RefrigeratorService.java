@@ -18,8 +18,6 @@ public class RefrigeratorService {
 
     @Transactional // sql 작업 선언
     public Refrigerator save(RefrigeratorRequestDto requestDto) {
-        System.out.println("requestDto = " + requestDto.getName());
-        System.out.println("requestDto = " + requestDto.getMemo());
         return refrigeratorRepository.save(requestDto.toEntity());
     }
 
@@ -45,8 +43,9 @@ public class RefrigeratorService {
     }
 
     @Transactional
-    public void delete(Long id) {
+    public Long delete(Long id) {
         Refrigerator refrigerator = refrigeratorRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 냉장고가 없습니다. id="+id));
         refrigeratorRepository.delete(refrigerator);
+        return id;
     }
 }
