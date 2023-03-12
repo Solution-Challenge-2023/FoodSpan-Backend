@@ -34,23 +34,21 @@ public class ItemController {
     }
     // 단건 수정
     @PutMapping("{id}/items/{itemId}")
-    public ResponseEntity<ItemRequestDto> update(@PathVariable Long id, @PathVariable Long itemId, @RequestBody ItemRequestDto item) {
-        ItemResponseDto newItem =  itemService.update(id, itemId, item);
-        return ResponseDto.ok(item);
+    public ResponseEntity<ItemResponseDto> update(@PathVariable Long id, @PathVariable Long itemId, @RequestBody ItemRequestDto item) {
+        ItemResponseDto itemResponseDto = itemService.update(id, itemId, item);
+        return ResponseDto.ok(itemResponseDto);
     }
 
     @PostMapping("/items")
-    public ResponseEntity<List<Item>> save(@RequestBody List<Item> items) {
-        List<Item> saveditems = itemService.save(items);
-        return ResponseDto.ok(saveditems);
+    public String save(@RequestBody List<Item> items) {
+        return itemService.save(items).toString();
     }
 
     // 다건 수정
     @PutMapping("/items")
-    public ResponseEntity<List<ItemResponseDto>> update(@RequestBody List<Item> items) {
+    public List<ItemResponseDto> update(@RequestBody List<Item> items) {
         itemService.updateAll(items);
-        List<ItemResponseDto> updated = itemService.findAll(3L, 3L, "added");
-        return ResponseDto.ok(updated);
+        return itemService.findAll(3L, 3L, "added");
     }
 
     // 단건 삭제

@@ -5,7 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -19,6 +21,8 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity // User 클래스가 MySQL에 테이블 자동으로 생성됨
+@SQLDelete(sql = "UPDATE refrigerator SET isDeleted = true, deletedAt = CURRENT_TIMESTAMP WHERE id = ?")
+@Where(clause = "isDeleted = false")
 public class Refrigerator {
 
     @Id
@@ -48,6 +52,7 @@ public class Refrigerator {
     private LocalDateTime updatedAt;
 
     // TODO: Soft delete로 변경
+    private boolean isDeleted = Boolean.FALSE;
     private Timestamp deletedAt;
 
     public void update(String name, String memo) {

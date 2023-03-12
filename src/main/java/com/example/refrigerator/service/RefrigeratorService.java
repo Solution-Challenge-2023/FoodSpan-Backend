@@ -1,7 +1,9 @@
 package com.example.refrigerator.service;
 
 import com.example.refrigerator.domain.Refrigerator;
+import com.example.refrigerator.dto.ItemResponseDto;
 import com.example.refrigerator.dto.RefrigeratorRequestDto;
+import com.example.refrigerator.dto.RefrigeratorResponseDto;
 import com.example.refrigerator.repository.RefrigeratorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,8 +33,9 @@ public class RefrigeratorService {
         return refrigerator;
     }
 
-    public List<Refrigerator> findAll() {
-        return refrigeratorRepository.findAll();
+    public List<RefrigeratorResponseDto> findAll() {
+        List<Refrigerator> refrigerators = refrigeratorRepository.findAll();
+        return refrigerators.stream().map(refrigerator -> new RefrigeratorResponseDto(refrigerator)).collect(Collectors.toList());
     }
 
     @Transactional
@@ -45,9 +49,8 @@ public class RefrigeratorService {
     }
 
     @Transactional
-    public Long delete(Long id) {
+    public void delete(Long id) {
         Refrigerator refrigerator = refrigeratorRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND ,"해당 냉장고가 없습니다. id="+id));
-        refrigeratorRepository.delete(refrigerator);
-        return id;
+        refrigeratorRepository.deleteById(id);
     }
 }
